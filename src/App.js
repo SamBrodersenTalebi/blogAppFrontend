@@ -22,6 +22,8 @@ const App = () => {
   });
   const [message, setMessage] = useState('');
 
+  const blogFormRef = React.createRef();
+
   useEffect(() => {
     blogService.getAll().then((blogs) => {
       setBlogs(blogs);
@@ -81,6 +83,7 @@ const App = () => {
         author,
         url,
       };
+      blogFormRef.current.toggleVisibility();
       const addedBlog = await blogService.create(newBlog);
       setBlogs(blogs.concat(addedBlog));
       setFormDataBlog({ author: '', title: '', url: '' });
@@ -149,7 +152,7 @@ const App = () => {
       <p>
         {user.name} logged in <button onClick={() => logOut()}>logout</button>
       </p>
-      <Togglable buttonLabel='New blog'>
+      <Togglable buttonLabel='New blog' ref={blogFormRef}>
         <BlogForm
           url={formDataBlog.url}
           author={formDataBlog.author}
