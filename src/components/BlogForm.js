@@ -8,6 +8,7 @@ const BlogForm = ({ onSubmit, onChange, author, title, url }) => {
         <div>
           title:
           <input
+            id='title'
             type='text'
             value={title}
             name='title'
@@ -17,6 +18,7 @@ const BlogForm = ({ onSubmit, onChange, author, title, url }) => {
         <div>
           author:
           <input
+            id='author'
             type='text'
             value={author}
             name='author'
@@ -26,6 +28,7 @@ const BlogForm = ({ onSubmit, onChange, author, title, url }) => {
         <div>
           url:
           <input
+            id='url'
             type='text'
             value={url}
             name='url'
