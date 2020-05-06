@@ -37,6 +37,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       blogService.setToken(user.token);
+      console.log(user.token);
     }
   }, []);
 
@@ -45,9 +46,6 @@ const App = () => {
     const { username, password } = formDataLogin;
     try {
       const user = await loginService.login({ username, password });
-
-      if (!user) {
-      }
       //save user to local storage:
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
       //user it object with token, name and username.
@@ -83,6 +81,8 @@ const App = () => {
         author,
         url,
       };
+      console.log(newBlog);
+      console.log('bearer ' + user.token);
       blogFormRef.current.toggleVisibility();
       const addedBlog = await blogService.create(newBlog);
       setBlogs(blogs.concat(addedBlog));
@@ -101,8 +101,6 @@ const App = () => {
   };
 
   const handleLoginChange = (e) => {
-    console.log(e.target.value);
-    console.log(e.target.name);
     setFormDataLogin({ ...formDataLogin, [e.target.name]: e.target.value });
   };
 

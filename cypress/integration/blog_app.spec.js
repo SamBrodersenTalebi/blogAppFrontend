@@ -38,4 +38,19 @@ describe('Note app', function () {
       cy.contains('Invalid user or password');
     });
   });
+
+  describe('When logged in', function () {
+    beforeEach(function () {
+      cy.login({ username: 'sam', password: '123' });
+    });
+
+    it('A blog can be created', function () {
+      cy.contains('New blog').click();
+      cy.get('#title').type('New Blog');
+      cy.get('#author').type('Sam');
+      cy.get('#url').type('www.sam.com');
+      cy.get('#create-blog').click();
+      cy.contains('New blog was created');
+    });
+  });
 });

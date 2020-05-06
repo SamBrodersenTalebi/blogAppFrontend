@@ -35,7 +35,9 @@ const BlogForm = ({ onSubmit, onChange, author, title, url }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-        <button type='submit'>create</button>
+        <button id='create-blog' type='submit'>
+          create
+        </button>
       </form>
     </div>
   );
