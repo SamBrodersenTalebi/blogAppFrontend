@@ -25,7 +25,9 @@ const LoginForm = ({ onSubmit, handleChange, password, username }) => {
             onChange={(e) => handleChange(e)}
           />
         </div>
-        <button type='submit'>login</button>
+        <button id='login-button' type='submit'>
+          login
+        </button>
       </form>
     </div>
   );

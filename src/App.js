@@ -20,7 +20,7 @@ const App = () => {
     title: '',
     url: '',
   });
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(null);
 
   const blogFormRef = React.createRef();
 
@@ -123,10 +123,18 @@ const App = () => {
   };
 
   const deleteBlog = async (id) => {
-    console.log('id:', id);
-    await blogService.remove(id);
-    const blogs = await blogService.getAll();
-    setBlogs(blogs);
+    try {
+      console.log('id:', id);
+      await blogService.remove(id);
+      const blogs = await blogService.getAll();
+      setBlogs(blogs);
+    } catch (error) {
+      console.log(error);
+      setMessage('Not authorized');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
   };
 
   if (user === null) {
