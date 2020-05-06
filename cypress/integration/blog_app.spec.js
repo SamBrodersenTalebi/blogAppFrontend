@@ -16,4 +16,26 @@ describe('Note app', function () {
     cy.get('.toggle-button').click();
     cy.contains('Log in to application');
   });
+
+  describe('Login', function () {
+    beforeEach(function () {
+      cy.get('.toggle-button').click();
+    });
+
+    it('Successful login', function () {
+      cy.contains('Log in to application');
+      cy.get('input:first').type('sam');
+      cy.get('input:last').type('123');
+      cy.get('#login-button').click();
+      cy.contains('Sam Brodersen logged in');
+    });
+
+    it('Login fail with wrong credentials', function () {
+      cy.contains('Log in to application');
+      cy.get('input:first').type('sam');
+      cy.get('input:last').type('1236');
+      cy.get('#login-button').click();
+      cy.contains('Invalid user or password');
+    });
+  });
 });
