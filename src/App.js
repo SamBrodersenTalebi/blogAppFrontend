@@ -7,6 +7,8 @@ import './App.css';
 import Togglable from './components/Togglable';
 import BlogForm from './components/BlogForm';
 import LoginForm from './components/LoginForm';
+import { setNotification } from './reducers/notificationReducer';
+import { useDispatch } from 'react-redux';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -20,10 +22,7 @@ const App = () => {
     title: '',
     url: '',
   });
-  const [message, setMessage] = useState({
-    message: null,
-    error: false,
-  });
+  const dispatch = useDispatch();
 
   const blogFormRef = React.createRef();
 
@@ -57,27 +56,9 @@ const App = () => {
         password: '',
         username: '',
       });
-      setMessage({
-        message: 'Login Sucessfull',
-        error: false,
-      });
-      setTimeout(() => {
-        setMessage({
-          message: null,
-          error: false,
-        });
-      }, 5000);
+      dispatch(setNotification('Login Sucessfull', 3));
     } catch (error) {
-      setMessage({
-        message: 'Invalid user or password',
-        error: true,
-      });
-      setTimeout(() => {
-        setMessage({
-          message: null,
-          error: false,
-        });
-      }, 5000);
+      dispatch(setNotification('Invalid user or password', 3));
       console.log(error);
     }
   };
@@ -96,22 +77,12 @@ const App = () => {
         author,
         url,
       };
-      console.log(newBlog);
       console.log('bearer ' + user.token);
       blogFormRef.current.toggleVisibility();
       const addedBlog = await blogService.create(newBlog);
       setBlogs(blogs.concat(addedBlog));
       setFormDataBlog({ author: '', title: '', url: '' });
-      setMessage({
-        message: 'New blog was created',
-        error: false,
-      });
-      setTimeout(() => {
-        setMessage({
-          message: null,
-          error: false,
-        });
-      }, 5000);
+      dispatch(setNotification('New blog was created', 3));
     } catch (error) {
       console.log(error);
     }
@@ -148,24 +119,15 @@ const App = () => {
       const blogs = await blogService.getAll();
       setBlogs(blogs);
     } catch (error) {
+      dispatch(setNotification('Not authorized', 3));
       console.log(error);
-      setMessage({
-        message: 'Not authorized',
-        error: true,
-      });
-      setTimeout(() => {
-        setMessage({
-          message: null,
-          error: false,
-        });
-      }, 5000);
     }
   };
 
   if (user === null) {
     return (
       <div>
-        <Notification message={message.message} error={message.error} />
+        <Notification />
         <Togglable buttonLabel='Login'>
           <LoginForm
             password={formDataLogin.password}
@@ -180,7 +142,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={message.message} error={message.error} />
+      <Notification />
       <h2>Blogs</h2>
       <p>
         {user.name} logged in <button onClick={() => logOut()}>logout</button>
