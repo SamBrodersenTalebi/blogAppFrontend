@@ -8,10 +8,12 @@ import Togglable from './components/Togglable';
 import BlogForm from './components/BlogForm';
 import LoginForm from './components/LoginForm';
 import { setNotification } from './reducers/notificationReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { initialBlogs } from './reducers/blogReducer';
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
+  const dispatch = useDispatch();
+  const blogFormRef = React.createRef();
   const [user, setUser] = useState(null);
   const [formDataLogin, setFormDataLogin] = useState({
     password: '',
@@ -22,14 +24,11 @@ const App = () => {
     title: '',
     url: '',
   });
-  const dispatch = useDispatch();
-
-  const blogFormRef = React.createRef();
+  let blogs = useSelector((state) => state.blogs);
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => {
-      setBlogs(blogs);
-    });
+    dispatch(initialBlogs());
+    //get blogs
   }, []);
 
   useEffect(() => {
@@ -80,7 +79,6 @@ const App = () => {
       console.log('bearer ' + user.token);
       blogFormRef.current.toggleVisibility();
       const addedBlog = await blogService.create(newBlog);
-      setBlogs(blogs.concat(addedBlog));
       setFormDataBlog({ author: '', title: '', url: '' });
       dispatch(setNotification('New blog was created', 3));
     } catch (error) {
@@ -109,7 +107,7 @@ const App = () => {
       likes: blog.likes + 1,
     };
     const updatedBlog = await blogService.update(changedBlog, id);
-    setBlogs(blogs.map((blog) => (blog.id !== id ? blog : updatedBlog)));
+    //setBlogs(blogs.map((blog) => (blog.id !== id ? blog : updatedBlog)));
   };
 
   const deleteBlog = async (id) => {
@@ -117,7 +115,7 @@ const App = () => {
       console.log('id:', id);
       await blogService.remove(id);
       const blogs = await blogService.getAll();
-      setBlogs(blogs);
+      //setBlogs(blogs);
     } catch (error) {
       dispatch(setNotification('Not authorized', 3));
       console.log(error);
