@@ -6,7 +6,7 @@ const reducer = (state = [], action) => {
       return action.data;
     case 'CREATE':
       //could use concat return new array!
-      [...state, action.data];
+      return [...state, action.data];
     default:
       return state;
   }

@@ -9,7 +9,7 @@ import BlogForm from './components/BlogForm';
 import LoginForm from './components/LoginForm';
 import { setNotification } from './reducers/notificationReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { initialBlogs } from './reducers/blogReducer';
+import { initialBlogs, createBlog } from './reducers/blogReducer';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const App = () => {
       };
       console.log('bearer ' + user.token);
       blogFormRef.current.toggleVisibility();
-      const addedBlog = await blogService.create(newBlog);
+      dispatch(createBlog(newBlog));
       setFormDataBlog({ author: '', title: '', url: '' });
       dispatch(setNotification('New blog was created', 3));
     } catch (error) {
