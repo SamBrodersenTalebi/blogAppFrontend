@@ -20,7 +20,10 @@ const App = () => {
     title: '',
     url: '',
   });
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState({
+    message: null,
+    error: false,
+  });
 
   const blogFormRef = React.createRef();
 
@@ -54,14 +57,26 @@ const App = () => {
         password: '',
         username: '',
       });
-      setMessage('Login Sucessfull');
+      setMessage({
+        message: 'Login Sucessfull',
+        error: false,
+      });
       setTimeout(() => {
-        setMessage(null);
+        setMessage({
+          message: null,
+          error: false,
+        });
       }, 5000);
     } catch (error) {
-      setMessage('Invalid user or password');
+      setMessage({
+        message: 'Invalid user or password',
+        error: true,
+      });
       setTimeout(() => {
-        setMessage(null);
+        setMessage({
+          message: null,
+          error: false,
+        });
       }, 5000);
       console.log(error);
     }
@@ -87,9 +102,15 @@ const App = () => {
       const addedBlog = await blogService.create(newBlog);
       setBlogs(blogs.concat(addedBlog));
       setFormDataBlog({ author: '', title: '', url: '' });
-      setMessage('New blog was created');
+      setMessage({
+        message: 'New blog was created',
+        error: false,
+      });
       setTimeout(() => {
-        setMessage(null);
+        setMessage({
+          message: null,
+          error: false,
+        });
       }, 5000);
     } catch (error) {
       console.log(error);
@@ -128,9 +149,15 @@ const App = () => {
       setBlogs(blogs);
     } catch (error) {
       console.log(error);
-      setMessage('Not authorized');
+      setMessage({
+        message: 'Not authorized',
+        error: true,
+      });
       setTimeout(() => {
-        setMessage(null);
+        setMessage({
+          message: null,
+          error: false,
+        });
       }, 5000);
     }
   };
@@ -138,7 +165,7 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <Notification message={message} />
+        <Notification message={message.message} error={message.error} />
         <Togglable buttonLabel='Login'>
           <LoginForm
             password={formDataLogin.password}
@@ -153,7 +180,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={message} />
+      <Notification message={message.message} error={message.error} />
       <h2>Blogs</h2>
       <p>
         {user.name} logged in <button onClick={() => logOut()}>logout</button>
