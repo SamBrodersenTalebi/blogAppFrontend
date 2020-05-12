@@ -21,6 +21,7 @@ const App = () => {
     url: '',
   });
   let blogs = useSelector((state) => state.blogs);
+  let user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     dispatch(initialBlogs());

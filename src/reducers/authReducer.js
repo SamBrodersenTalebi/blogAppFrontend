@@ -49,4 +49,13 @@ export const login = (credentials) => {
   };
 };
 
+export const logout = () => {
+  return async (dispatch) => {
+    window.localStorage.removeItem('loggedNoteappUser');
+    dispatch({
+      type: 'LOGOUT',
+    });
+  };
+};
+
 export default authReducer;
