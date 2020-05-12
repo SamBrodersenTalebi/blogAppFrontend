@@ -10,11 +10,11 @@ import LoginForm from './components/LoginForm';
 import { setNotification } from './reducers/notificationReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { initialBlogs, createBlog } from './reducers/blogReducer';
+import { logout } from './reducers/authReducer';
 
 const App = () => {
   const dispatch = useDispatch();
   const blogFormRef = React.createRef();
-  const [user, setUser] = useState(null);
   const [formDataBlog, setFormDataBlog] = useState({
     author: '',
     title: '',
@@ -38,11 +38,6 @@ const App = () => {
       console.log(user.token);
     }
   }, []);
-
-  const logOut = () => {
-    window.localStorage.removeItem('loggedNoteappUser');
-    setUser(null);
-  };
 
   const handleBlogSubmit = async (e) => {
     e.preventDefault();
@@ -116,7 +111,8 @@ const App = () => {
       <Notification />
       <h2>Blogs</h2>
       <p>
-        {user.name} logged in <button onClick={() => logOut()}>logout</button>
+        {user.name} logged in{' '}
+        <button onClick={() => dispatch(logout())}>logout</button>
       </p>
       <Togglable buttonLabel='New blog' ref={blogFormRef}>
         <BlogForm

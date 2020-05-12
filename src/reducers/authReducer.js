@@ -18,6 +18,12 @@ const authReducer = (state = initialState, action) => {
       return {
         ...initialState,
       };
+    case 'INIT_AUTH':
+      return {
+        ...state,
+        token: action.data.token,
+        user: { name: action.data.name },
+      };
     default:
       return state;
   }
@@ -54,6 +60,22 @@ export const logout = () => {
     window.localStorage.removeItem('loggedNoteappUser');
     dispatch({
       type: 'LOGOUT',
+    });
+  };
+};
+
+export const initAuth = () => {
+  return async (dispatch) => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
+    if (loggedUserJSON) {
+      const localUser = JSON.parse(loggedUserJSON);
+      blogService.setToken(localUser.token);
+    } else {
+      blogService.setToken('');
+    }
+    dispatch({
+      type: 'INIT_AUTH',
+      data: localUser,
     });
   };
 };
