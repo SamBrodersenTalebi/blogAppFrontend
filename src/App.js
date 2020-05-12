@@ -10,7 +10,7 @@ import LoginForm from './components/LoginForm';
 import { setNotification } from './reducers/notificationReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { initialBlogs, createBlog } from './reducers/blogReducer';
-import { logout } from './reducers/authReducer';
+import { logout, initAuth } from './reducers/authReducer';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,14 +29,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
-    if (loggedUserJSON) {
-      //parse back to Javascript
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      blogService.setToken(user.token);
-      console.log(user.token);
-    }
+    dispatch(initAuth());
   }, []);
 
   const handleBlogSubmit = async (e) => {
@@ -95,12 +88,7 @@ const App = () => {
       <div>
         <Notification />
         <Togglable buttonLabel='Login'>
-          <LoginForm
-            password={formDataLogin.password}
-            username={formDataLogin.username}
-            onSubmit={handleLoginSubmit}
-            handleChange={handleLoginChange}
-          />
+          <LoginForm />
         </Togglable>
       </div>
     );

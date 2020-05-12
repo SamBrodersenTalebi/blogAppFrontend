@@ -22,7 +22,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.data.token,
-        user: { name: action.data.name },
+        user: { name: action.data.name, username: action.data.username },
       };
     default:
       return state;
@@ -49,8 +49,8 @@ export const login = (credentials) => {
         type: 'ADD',
         data: 'Failed to login to user',
       });
-      console.log(err.response.data.error);
-      console.log(err.response.data);
+      console.log(error.response.data.error);
+      console.log(error.response.data);
     }
   };
 };
@@ -67,16 +67,17 @@ export const logout = () => {
 export const initAuth = () => {
   return async (dispatch) => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
+    console.log(JSON.parse(loggedUserJSON));
     if (loggedUserJSON) {
-      const localUser = JSON.parse(loggedUserJSON);
-      blogService.setToken(localUser.token);
+      const userObject = JSON.parse(loggedUserJSON);
+      blogService.setToken(userObject.token);
+      dispatch({
+        type: 'INIT_AUTH',
+        data: userObject,
+      });
     } else {
       blogService.setToken('');
     }
-    dispatch({
-      type: 'INIT_AUTH',
-      data: localUser,
-    });
   };
 };
 
