@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../reducers/authReducer';
 
-const LoginForm = ({ onSubmit, handleChange, password, username }) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
   const [formDataLogin, setFormDataLogin] = useState({
     password: '',
     username: '',
@@ -10,21 +13,12 @@ const LoginForm = ({ onSubmit, handleChange, password, username }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = formDataLogin;
-    try {
-      const user = await loginService.login({ username, password });
-      //save user to local storage:
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
-      //user it object with token, name and username.
-      setUser(user);
-      setFormDataLogin({
-        password: '',
-        username: '',
-      });
-      dispatch(setNotification('Login Sucessfull', 3));
-    } catch (error) {
-      dispatch(setNotification('Invalid user or password', 3));
-      console.log(error);
-    }
+    const credentials = { username, password };
+    dispatch(login(credentials));
+    setFormDataLogin({
+      password: '',
+      username: '',
+    });
   };
 
   const handleLoginChange = (e) => {
@@ -35,23 +29,23 @@ const LoginForm = ({ onSubmit, handleChange, password, username }) => {
     <div>
       <h2>Log in to application</h2>
 
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleLoginSubmit}>
         <div>
           username
           <input
             type='text'
-            value={username}
+            value={formDataLogin.username}
             name='username'
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleLoginChange(e)}
           />
         </div>
         <div>
           password
           <input
             type='password'
-            value={password}
+            value={formDataLogin.password}
             name='password'
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleLoginChange(e)}
           />
         </div>
         <button id='login-button' type='submit'>

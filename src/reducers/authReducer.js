@@ -33,6 +33,10 @@ export const login = (credentials) => {
         type: 'LOGIN',
         data: user,
       });
+      dispatch({
+        type: 'ADD',
+        data: 'Successful login',
+      });
     } catch (error) {
       //if it does not login!
       dispatch({
