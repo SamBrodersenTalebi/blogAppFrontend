@@ -15,10 +15,6 @@ const App = () => {
   const dispatch = useDispatch();
   const blogFormRef = React.createRef();
   const [user, setUser] = useState(null);
-  const [formDataLogin, setFormDataLogin] = useState({
-    password: '',
-    username: '',
-  });
   const [formDataBlog, setFormDataBlog] = useState({
     author: '',
     title: '',
@@ -41,26 +37,6 @@ const App = () => {
       console.log(user.token);
     }
   }, []);
-
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    const { username, password } = formDataLogin;
-    try {
-      const user = await loginService.login({ username, password });
-      //save user to local storage:
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
-      //user it object with token, name and username.
-      setUser(user);
-      setFormDataLogin({
-        password: '',
-        username: '',
-      });
-      dispatch(setNotification('Login Sucessfull', 3));
-    } catch (error) {
-      dispatch(setNotification('Invalid user or password', 3));
-      console.log(error);
-    }
-  };
 
   const logOut = () => {
     window.localStorage.removeItem('loggedNoteappUser');
@@ -88,10 +64,6 @@ const App = () => {
 
   const handleBlogChange = (e) => {
     setFormDataBlog({ ...formDataBlog, [e.target.name]: e.target.value });
-  };
-
-  const handleLoginChange = (e) => {
-    setFormDataLogin({ ...formDataLogin, [e.target.name]: e.target.value });
   };
 
   const handleBlogLike = async (e) => {

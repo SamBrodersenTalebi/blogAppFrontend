@@ -9,16 +9,4 @@ const reducer = (state = null, action) => {
   }
 };
 
-export const initUsers = () => {
-  return async (dispatch) => {
-    const user = await userService.login(credentials);
-    //save user to local storage:
-    window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
-    dispatch({
-      type: 'INIT_USER',
-      data: user,
-    });
-  };
-};
-
 export default reducer;
