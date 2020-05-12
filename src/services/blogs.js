@@ -23,6 +23,11 @@ const create = async (newObject) => {
   return response.data;
 };
 
+const getById = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`);
+  return response.data;
+};
+
 const update = async (newObject, id) => {
   const request = await axios.put(`${baseUrl}/${id}`, newObject);
   return request.data;
@@ -37,4 +42,4 @@ const remove = async (id) => {
   }
 };
 
-export default { getAll, create, setToken, update, remove };
+export default { getAll, create, getById, setToken, update, remove };

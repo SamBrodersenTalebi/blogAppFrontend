@@ -1,10 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createBlog } from '../reducers/blogReducer';
 
-const BlogForm = ({ onSubmit, onChange, author, title, url }) => {
+const BlogForm = () => {
+  const dispatch = useDispatch();
+  const [formDataBlog, setFormDataBlog] = useState({
+    author: '',
+    title: '',
+    url: '',
+  });
+  const { title, author, url } = formDataBlog;
+
+  const handleBlogSubmit = async (e) => {
+    e.preventDefault();
+    const { title, author, url } = formDataBlog;
+
+    const newBlog = {
+      title,
+      author,
+      url,
+    };
+    //blogFormRef.current.toggleVisibility();
+    dispatch(createBlog(newBlog));
+    setFormDataBlog({ author: '', title: '', url: '' });
+  };
+
+  const handleBlogChange = (e) => {
+    setFormDataBlog({ ...formDataBlog, [e.target.name]: e.target.value });
+  };
+
   return (
     <div>
       <h2>Create new</h2>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleBlogSubmit}>
         <div>
           title:
           <input
@@ -12,7 +40,7 @@ const BlogForm = ({ onSubmit, onChange, author, title, url }) => {
             type='text'
             value={title}
             name='title'
-            onChange={(e) => onChange(e)}
+            onChange={(e) => handleBlogChange(e)}
           />
         </div>
         <div>
@@ -22,7 +50,7 @@ const BlogForm = ({ onSubmit, onChange, author, title, url }) => {
             type='text'
             value={author}
             name='author'
-            onChange={(e) => onChange(e)}
+            onChange={(e) => handleBlogChange(e)}
           />
         </div>
         <div>
@@ -32,7 +60,7 @@ const BlogForm = ({ onSubmit, onChange, author, title, url }) => {
             type='text'
             value={url}
             name='url'
-            onChange={(e) => onChange(e)}
+            onChange={(e) => handleBlogChange(e)}
           />
         </div>
         <button id='create-blog' type='submit'>

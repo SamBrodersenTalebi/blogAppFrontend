@@ -47,7 +47,7 @@ export const login = (credentials) => {
       //if it does not login!
       dispatch({
         type: 'ADD',
-        data: 'Failed to login to user',
+        data: 'Wrong username or password',
       });
       console.log(error.response.data.error);
       console.log(error.response.data);

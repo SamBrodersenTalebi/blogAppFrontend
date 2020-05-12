@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-const Blog = ({ blog, handleLike, deleteBlog }) => {
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteBlogRedux } from '../reducers/blogReducer';
+
+const Blog = ({ blog }) => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const blogStyle = {
     paddingTop: 10,
@@ -14,6 +18,26 @@ const Blog = ({ blog, handleLike, deleteBlog }) => {
 
   const toggleVisibility = () => {
     setVisible(!visible);
+  };
+
+  const handleLike = async (e) => {
+    /*e.preventDefault();
+    const id = e.target.value;
+    //find blog with that id
+    const blog = blogs.find((blog) => blog.id === id);
+    const changedBlog = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes + 1,
+    };
+    const updatedBlog = await blogService.update(changedBlog, id);
+    //setBlogs(blogs.map((blog) => (blog.id !== id ? blog : updatedBlog)));
+    */
+  };
+
+  const deleteBlog = async (id) => {
+    dispatch(deleteBlogRedux(id));
   };
 
   return (
