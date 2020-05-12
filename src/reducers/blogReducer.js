@@ -7,9 +7,14 @@ const reducer = (state = [], action) => {
     case 'CREATE':
       return [...state, action.data];
     case 'DELETE':
-      const index = state.findIndex((blog) => (blog.id = action.data));
-      let newBlogs = state.splice(index, 1);
+      const newBlogs = state.filter((blog) => blog.id !== action.data);
+      console.log(newBlogs);
       return newBlogs;
+    case 'LIKE':
+      const newBlog = state.map((blog) =>
+        blog.id !== action.data.id ? blog : action.data
+      );
+      return newBlog;
     default:
       return state;
   }
@@ -39,7 +44,7 @@ export const createBlog = (blog) => {
         type: 'CREATE',
         data: newBlog,
       });
-      const content = 'you have created: ' + blog.title;
+      const content = 'You have created: ' + blog.title;
       dispatch({
         type: 'ADD',
         data: content,
@@ -81,21 +86,26 @@ export const deleteBlogRedux = (id) => {
 export const likeBlog = (id) => {
   return async (dispatch) => {
     try {
-      const deletedBlog = await blogService.getById(id);
-      await blogService.remove(id);
-      console.log(deletedBlog);
+      const blog = await blogService.getById(id);
+      const changedBlog = {
+        title: blog.title,
+        author: blog.author,
+        url: blog.url,
+        likes: blog.likes + 1,
+      };
+      const updatedBlog = await blogService.update(changedBlog, id);
       dispatch({
-        type: 'DELETE',
-        data: deletedBlog,
+        type: 'LIKE',
+        data: updatedBlog,
       });
       dispatch({
         type: 'ADD',
-        data: 'Deleted blog',
+        data: 'You just liked: ' + blog.title,
       });
     } catch (error) {
       dispatch({
         type: 'ADD',
-        data: 'Not authorized',
+        data: error.response.data.error,
       });
       console.log(error.response.data.error);
     }

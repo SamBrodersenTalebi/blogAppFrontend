@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteBlogRedux } from '../reducers/blogReducer';
+import { deleteBlogRedux, likeBlog } from '../reducers/blogReducer';
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch();
@@ -21,19 +21,9 @@ const Blog = ({ blog }) => {
   };
 
   const handleLike = async (e) => {
-    /*e.preventDefault();
+    e.preventDefault();
     const id = e.target.value;
-    //find blog with that id
-    const blog = blogs.find((blog) => blog.id === id);
-    const changedBlog = {
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: blog.likes + 1,
-    };
-    const updatedBlog = await blogService.update(changedBlog, id);
-    //setBlogs(blogs.map((blog) => (blog.id !== id ? blog : updatedBlog)));
-    */
+    dispatch(likeBlog(id));
   };
 
   const deleteBlog = async (id) => {
