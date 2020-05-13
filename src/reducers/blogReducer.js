@@ -25,7 +25,7 @@ ACTIONS
 */
 
 //Get inital blogs
-export const initialBlogs = (blogs) => {
+export const initialBlogs = () => {
   return async (dispatch) => {
     const anecdotes = await blogService.getAll();
     dispatch({
