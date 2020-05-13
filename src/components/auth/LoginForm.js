@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../reducers/authReducer';
+import { login } from '../../reducers/authReducer';
 
 const LoginForm = () => {
   const dispatch = useDispatch();

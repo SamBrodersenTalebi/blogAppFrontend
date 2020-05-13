@@ -4,6 +4,7 @@ import blogService from '../services/blogs';
 const initialState = {
   token: '',
   user: null,
+  loading: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -22,6 +23,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.data.token,
+        loading: true,
         user: { name: action.data.name, username: action.data.username },
       };
     default:

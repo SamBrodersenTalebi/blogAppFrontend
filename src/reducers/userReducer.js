@@ -9,7 +9,7 @@ const reducer = (state = [], action) => {
   }
 };
 
-const initialUsers = () => {
+export const initialUsers = () => {
   return async (dispatch) => {
     const users = await userService.getAll();
     dispatch({

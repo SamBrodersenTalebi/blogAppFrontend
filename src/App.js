@@ -1,30 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import Blog from './components/Blog';
+//import Blog from './components/Blog';
 import Notification from './components/Notification';
 import './App.css';
+/*
 import Togglable from './components/Togglable';
 import BlogForm from './components/BlogForm';
-import LoginForm from './components/LoginForm';
+*/
+import LoginForm from './components/auth/LoginForm';
+import Register from './components/auth/Register';
+import Navbar from './components/layout/Navbar';
+import Landing from './components/layout/Landing';
 import { useDispatch, useSelector } from 'react-redux';
-import { initialBlogs } from './reducers/blogReducer';
-import { logout, initAuth } from './reducers/authReducer';
+import { initAuth } from './reducers/authReducer';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
   const dispatch = useDispatch();
-  const blogFormRef = React.createRef();
-  let blogs = useSelector((state) => state.blogs);
-  let user = useSelector((state) => state.auth.user);
-
-  useEffect(() => {
-    dispatch(initialBlogs());
-    //get blogs
-  }, []);
+  //const blogFormRef = React.createRef();
+  const loading = useSelector((state) => state.auth.loading);
 
   useEffect(() => {
     dispatch(initAuth());
   }, []);
 
-  if (user === null) {
+  return (
+    <div className='container App'>
+      {loading ? (
+        <>
+          <Router>
+            <div className='App'>
+              <Navbar />
+              <Notification />
+              <Switch>
+                <Route path='/login' exact component={LoginForm} />
+                <Route path='/register' exact component={Register} />
+                <Route path='/' exact component={Landing} />
+              </Switch>
+            </div>
+          </Router>
+        </>
+      ) : (
+        <div>
+          <p>Loading...</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
+/*
+      <h2>Users</h2>
+      <table>
+        <tr>
+          <th>Username</th>
+          <th>blogs created</th>
+        </tr>
+        {users.map((user) => (
+          <User user={user} />
+        ))}
+      </table>
+*/
+
+/*if (user === null) {
     return (
       <div>
         <Notification />
@@ -53,6 +91,4 @@ const App = () => {
         ))}
     </div>
   );
-};
-
-export default App;
+  */
