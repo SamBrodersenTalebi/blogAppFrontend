@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import BlogList from '../blogs/BlogList';
 
 const Landing = () => {
   const user = useSelector((state) => state.auth.user);
@@ -25,6 +26,7 @@ const Landing = () => {
           </Button>
         </div>
       )}
+      <BlogList />
     </div>
   );
 };

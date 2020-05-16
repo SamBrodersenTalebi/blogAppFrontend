@@ -15,9 +15,6 @@ const Navbar = () => {
           <Link to='/'>home</Link>
         </Button>
         <Button color='inherit'>
-          <Link to='/notes'>notes</Link>
-        </Button>
-        <Button color='inherit'>
           <Link to='/users'>users</Link>
         </Button>
         {user ? <NavDetails /> : <Link to='/login'>login</Link>}

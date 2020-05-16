@@ -7,6 +7,7 @@ import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import Landing from './components/layout/Landing';
 import User from './components/users/User';
+import BlogDetail from './components/blogs/BlogDetail';
 import { useDispatch, useSelector } from 'react-redux';
 import { initAuth } from './reducers/authReducer';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
@@ -21,6 +22,12 @@ const App = () => {
   const matchUser = useRouteMatch('/users/:id');
   const user = matchUser
     ? users.find((user) => user.id === matchUser.params.id)
+    : null;
+
+  const blogs = useSelector((state) => state.blogs);
+  const matchBlog = useRouteMatch('/blogs/:id');
+  const blog = matchBlog
+    ? blogs.find((blog) => blog.id === matchBlog.params.id)
     : null;
 
   useEffect(() => {
@@ -41,6 +48,9 @@ const App = () => {
               <Route path='/users' exact component={Users} />
               <Route path='/users/:id'>
                 <User user={user} />
+              </Route>
+              <Route path='/blogs/:id'>
+                <BlogDetail blog={blog} />
               </Route>
             </Switch>
             <Footer />
