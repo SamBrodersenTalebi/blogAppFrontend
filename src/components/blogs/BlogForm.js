@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createBlog } from '../reducers/blogReducer';
+import { createBlog } from '../../reducers/blogReducer';
 
 const BlogForm = () => {
   const dispatch = useDispatch();

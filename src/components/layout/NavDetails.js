@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { logout } from '../reducers/authReducer';
+import { logout } from '../../reducers/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 

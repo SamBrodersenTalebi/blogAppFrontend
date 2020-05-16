@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Button } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import NavDetails from '../NavDetails';
+import NavDetails from './NavDetails';
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
