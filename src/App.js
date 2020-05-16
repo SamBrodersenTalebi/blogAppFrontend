@@ -6,9 +6,10 @@ import Register from './components/auth/Register';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import Landing from './components/layout/Landing';
+import User from './components/users/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { initAuth } from './reducers/authReducer';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Footer from './components/layout/Footer';
 
@@ -16,6 +17,11 @@ const App = () => {
   const dispatch = useDispatch();
   //const blogFormRef = React.createRef();
   const loading = useSelector((state) => state.auth.loading);
+  const users = useSelector((state) => state.users);
+  const matchUser = useRouteMatch('/users/:id');
+  const user = matchUser
+    ? users.find((user) => user.id === matchUser.params.id)
+    : null;
 
   useEffect(() => {
     dispatch(initAuth());
@@ -25,19 +31,20 @@ const App = () => {
     <Container>
       {loading ? (
         <>
-          <Router>
-            <Container>
-              <Navbar />
-              <Notification />
-              <Switch>
-                <Route path='/login' exact component={LoginForm} />
-                <Route path='/register' exact component={Register} />
-                <Route path='/' exact component={Landing} />
-                <Route path='/users' exact component={Users} />
-              </Switch>
-              <Footer />
-            </Container>
-          </Router>
+          <Container>
+            <Navbar />
+            <Notification />
+            <Switch>
+              <Route path='/login' exact component={LoginForm} />
+              <Route path='/register' exact component={Register} />
+              <Route path='/' exact component={Landing} />
+              <Route path='/users' exact component={Users} />
+              <Route path='/users/:id'>
+                <User user={user} />
+              </Route>
+            </Switch>
+            <Footer />
+          </Container>
         </>
       ) : (
         <div>

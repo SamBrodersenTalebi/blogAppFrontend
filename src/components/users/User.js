@@ -1,19 +1,10 @@
 import React, { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {} from '../reducers/userReducer';
+import {} from '../../reducers/userReducer';
 
 const User = ({ user }) => {
-  if (!user) {
-    return null;
-  }
-  return (
-    <Fragment>
-      <tr>
-        <th>{user.name}</th>
-        <th>{user.blogs.length}</th>
-      </tr>
-    </Fragment>
-  );
+  console.log(user);
+  return <div>Hi</div>;
 };
 
 export default User;
