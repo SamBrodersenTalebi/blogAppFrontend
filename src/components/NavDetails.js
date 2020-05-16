@@ -3,7 +3,7 @@ import { logout } from '../reducers/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 
-export default function UserDetails() {
+export default function NavDetails() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
 
