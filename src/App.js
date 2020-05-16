@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-//import Blog from './components/Blog';
 import Notification from './components/Notification';
 import './App.css';
-/*
-import Togglable from './components/Togglable';
-import BlogForm from './components/BlogForm';
-*/
 import LoginForm from './components/auth/LoginForm';
 import Register from './components/auth/Register';
 import Navbar from './components/layout/Navbar';
+import Users from './components/users/Users';
 import Landing from './components/layout/Landing';
 import { useDispatch, useSelector } from 'react-redux';
 import { initAuth } from './reducers/authReducer';
@@ -37,6 +33,7 @@ const App = () => {
                 <Route path='/login' exact component={LoginForm} />
                 <Route path='/register' exact component={Register} />
                 <Route path='/' exact component={Landing} />
+                <Route path='/users' exact component={Users} />
               </Switch>
               <Footer />
             </Container>
