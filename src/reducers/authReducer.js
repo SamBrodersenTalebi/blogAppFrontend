@@ -18,6 +18,7 @@ const authReducer = (state = initialState, action) => {
     case 'LOGOUT':
       return {
         ...initialState,
+        loading: true,
       };
     case 'INIT_AUTH':
       return {

@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Button } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import UserDetails from '../UserDetails';
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
-  const name = useSelector((state) => state.auth.user.name);
+
   return (
     <AppBar position='static'>
       <Toolbar>
@@ -19,11 +20,10 @@ const Navbar = () => {
         <Button color='inherit'>
           <Link to='/users'>users</Link>
         </Button>
-        <Button color='inherit'>
-          {user ? <em>{name} logged in</em> : <Link to='/login'>login</Link>}
-        </Button>
+        {user ? <UserDetails /> : <Link to='/login'>login</Link>}
       </Toolbar>
     </AppBar>
   );
 };
+
 export default Navbar;

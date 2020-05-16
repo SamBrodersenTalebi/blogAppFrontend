@@ -5,14 +5,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginForm = () => {
+  const user = useSelector((state) => state.auth.user);
+  const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
   const [formDataLogin, setFormDataLogin] = useState({
@@ -47,6 +49,7 @@ const LoginForm = () => {
     const { username, password } = formDataLogin;
     const credentials = { username, password };
     dispatch(login(credentials));
+    history.push('/');
     setFormDataLogin({
       password: '',
       username: '',
@@ -57,6 +60,7 @@ const LoginForm = () => {
     setFormDataLogin({ ...formDataLogin, [e.target.name]: e.target.value });
   };
 
+  if (user) return <Redirect to='/' />;
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
