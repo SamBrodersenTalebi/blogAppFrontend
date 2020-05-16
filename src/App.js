@@ -13,6 +13,8 @@ import Landing from './components/layout/Landing';
 import { useDispatch, useSelector } from 'react-redux';
 import { initAuth } from './reducers/authReducer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import Footer from './components/layout/Footer';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,11 +26,11 @@ const App = () => {
   }, []);
 
   return (
-    <div className='container App'>
+    <Container>
       {loading ? (
         <>
           <Router>
-            <div className='App'>
+            <Container>
               <Navbar />
               <Notification />
               <Switch>
@@ -36,7 +38,8 @@ const App = () => {
                 <Route path='/register' exact component={Register} />
                 <Route path='/' exact component={Landing} />
               </Switch>
-            </div>
+              <Footer />
+            </Container>
           </Router>
         </>
       ) : (
@@ -44,7 +47,7 @@ const App = () => {
           <p>Loading...</p>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

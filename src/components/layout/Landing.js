@@ -1,49 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const Landing = () => {
   return (
-    <div style={{ height: '75vh' }} className='container valign-wrapper'>
-      <div className='row'>
-        <div className='col s12 center-align'>
-          <h4>
-            <b>Welcome</b> to Sams Blog application where you can customize and
-            create your{' '}
-            <span style={{ fontFamily: 'monospace' }}>own blogs</span> from
-            scratch
-          </h4>
-          <p className='flow-text grey-text text-darken-1'>
-            Create your own user or login if you already have one
-          </p>
-          <br />
-          <div className='col s6'>
-            <Link
-              to='/register'
-              style={{
-                width: '140px',
-                borderRadius: '3px',
-                letterSpacing: '1.5px',
-              }}
-              className='btn btn-large waves-effect waves-light hoverable blue accent-3'
-            >
-              Register
-            </Link>
-          </div>
-          <div className='col s6'>
-            <Link
-              to='/login'
-              style={{
-                width: '140px',
-                borderRadius: '3px',
-                letterSpacing: '1.5px',
-              }}
-              className='btn btn-large btn-flat waves-effect white black-text'
-            >
-              Log In
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h2>
+        Welcome to Sams Blog application where you can customize and create your{' '}
+        <i>own blogs</i> from scratch
+      </h2>
+      <p>Create your own user or login if you already have one</p>
+      <Button variant='contained' color='primary'>
+        <Link to='register'>Sign Up</Link>
+      </Button>
+      <Button variant='contained'>
+        <Link to='login'>Log in</Link>
+      </Button>
     </div>
   );
 };

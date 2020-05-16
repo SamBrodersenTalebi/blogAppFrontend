@@ -1,111 +1,155 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setNotification } from '../../reducers/notificationReducer';
+import loginService from '../../services/login';
+import { useHistory } from 'react-router-dom';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 const Register = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     password2: '',
-    errors: {},
   });
 
-  const { name, email, password, password2, errors } = formData;
+  const { name, email, password, password2 } = formData;
 
   const onChange = (e) => {
+    console.log(e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const newUser = {
-      name,
-      email,
-      password,
-      password2,
-    };
-    console.log(newUser);
+    if (password !== password2) {
+      dispatch(setNotification('passwords must match!'));
+    } else {
+      const newUser = {
+        name,
+        email,
+        password,
+      };
+      try {
+        await loginService.register(newUser);
+        history.push('/login');
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col s8 offset-s2'>
-          <Link to='/' className='btn-flat waves-effect'>
-            <i className='material-icons left'>keyboard_backspace</i> Back to
-            home
-          </Link>
-          <div className='col s12' style={{ paddingLeft: '11.250px' }}>
-            <h4>
-              <b>Register</b> below
-            </h4>
-            <p className='grey-text text-darken-1'>
-              Already have an account? <Link to='/login'>Log in</Link>
-            </p>
-          </div>
-          <form noValidate onSubmit={(e) => onSubmit(e)}>
-            <div className='input-field col s12'>
-              <input
-                onChange={(e) => onChange(e)}
-                value={name}
-                id='name'
-                type='text'
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5'>
+          Sign up
+        </Typography>
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete='fname'
+                name='firstName'
+                variant='outlined'
                 required
-                name='name'
+                fullWidth
+                id='firstName'
+                label='First Name'
+                autoFocus
               />
-              <label htmlFor='name'>Name</label>
-            </div>
-            <div className='input-field col s12'>
-              <input
-                onChange={(e) => onChange(e)}
-                value={email}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                id='lastName'
+                label='Last Name'
+                name='lastName'
+                autoComplete='lname'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
                 id='email'
-                type='email'
+                label='Email Address'
                 name='email'
-                required
+                autoComplete='email'
               />
-              <label htmlFor='email'>Email</label>
-            </div>
-            <div className='input-field col s12'>
-              <input
-                onChange={(e) => onChange(e)}
-                value={password}
-                id='password'
-                type='password'
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
                 name='password'
-                required
-              />
-              <label htmlFor='password'>Password</label>
-            </div>
-            <div className='input-field col s12'>
-              <input
-                onChange={(e) => onChange(e)}
-                value={password2}
-                id='password2'
+                label='Password'
                 type='password'
-                name='password2'
-                required
+                id='password'
+                autoComplete='current-password'
               />
-              <label htmlFor='password2'>Confirm Password</label>
-            </div>
-            <div className='col s12' style={{ paddingLeft: '11.250px' }}>
-              <button
-                style={{
-                  width: '150px',
-                  borderRadius: '3px',
-                  letterSpacing: '1.5px',
-                  marginTop: '1rem',
-                }}
-                type='submit'
-                className='btn btn-large waves-effect waves-light hoverable blue accent-3'
-              >
-                Sign up
-              </button>
-            </div>
-          </form>
-        </div>
+            </Grid>
+          </Grid>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+            className={classes.submit}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify='flex-end'>
+            <Grid item>
+              <Link to='login'>Already have an account? Sign in</Link>
+            </Grid>
+          </Grid>
+        </form>
       </div>
-    </div>
+    </Container>
   );
 };
 export default Register;
