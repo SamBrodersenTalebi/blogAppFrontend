@@ -42,13 +42,13 @@ const Register = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    firstName: '',
+    lastName: '',
+    username: '',
     password: '',
-    password2: '',
   });
 
-  const { name, email, password, password2 } = formData;
+  const { firstName, lastName, username, password } = formData;
 
   const onChange = (e) => {
     console.log(e.target.value);
@@ -57,20 +57,24 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password !== password2) {
-      dispatch(setNotification('passwords must match!'));
-    } else {
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-      try {
-        await loginService.register(newUser);
-        history.push('/login');
-      } catch (error) {
-        console.log(error);
-      }
+    const name = firstName + ' ' + lastName;
+    const newUser = {
+      name,
+      username,
+      password,
+    };
+    console.log(newUser);
+    try {
+      await loginService.register(newUser);
+      history.push('/login');
+      setFormData({
+        firstName: '',
+        lastName: '',
+        username: '',
+        password: '',
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -84,7 +88,7 @@ const Register = () => {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -96,6 +100,7 @@ const Register = () => {
                 id='firstName'
                 label='First Name'
                 autoFocus
+                onChange={(e) => onChange(e)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -107,6 +112,7 @@ const Register = () => {
                 label='Last Name'
                 name='lastName'
                 autoComplete='lname'
+                onChange={(e) => onChange(e)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -114,10 +120,10 @@ const Register = () => {
                 variant='outlined'
                 required
                 fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
+                id='username'
+                label='Username'
+                name='username'
+                onChange={(e) => onChange(e)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -130,16 +136,11 @@ const Register = () => {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                onChange={(e) => onChange(e)}
               />
             </Grid>
           </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-          >
+          <Button type='submit' fullWidth variant='contained' color='primary'>
             Sign Up
           </Button>
           <Grid container justify='flex-end'>

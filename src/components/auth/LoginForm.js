@@ -9,7 +9,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -68,17 +67,16 @@ const LoginForm = () => {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleLoginSubmit}>
           <TextField
             variant='outlined'
             margin='normal'
             required
             fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
+            label='Username'
+            name='username'
             autoFocus
+            onChange={handleLoginChange}
           />
           <TextField
             variant='outlined'
@@ -88,8 +86,8 @@ const LoginForm = () => {
             name='password'
             label='Password'
             type='password'
-            id='password'
             autoComplete='current-password'
+            onChange={handleLoginChange}
           />
           <Button
             type='submit'
