@@ -5,7 +5,6 @@ import {
   likeBlog,
   commentBlog,
 } from '../../reducers/blogReducer';
-import { Redirect } from 'react-router-dom';
 
 const BlogDetail = ({ blog }) => {
   const [comment, setComment] = useState('');

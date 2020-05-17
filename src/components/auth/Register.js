@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setNotification } from '../../reducers/notificationReducer';
 import loginService from '../../services/login';
 import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
@@ -38,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 const Register = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
   const history = useHistory();
   const [formData, setFormData] = useState({
     firstName: '',
