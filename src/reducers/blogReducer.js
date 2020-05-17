@@ -15,6 +15,12 @@ const reducer = (state = [], action) => {
         blog.id !== action.data.id ? blog : action.data
       );
       return newBlog;
+    case 'COMMENT':
+      const blogs = state.map((blog) => {
+        //if blog id does not match it will return blog otherwise the newly updated blog
+        return blog.id !== action.data.id ? blog : action.data;
+      });
+      return blogs;
     default:
       return state;
   }
@@ -106,6 +112,29 @@ export const likeBlog = (id) => {
       dispatch({
         type: 'ADD',
         data: error.response.data.error,
+      });
+      console.log(error.response.data.error);
+    }
+  };
+};
+
+//comment blog
+export const commentBlog = (content, id) => {
+  return async (dispatch) => {
+    try {
+      const blog = await blogService.addComment(content, id);
+      dispatch({
+        type: 'COMMENT',
+        data: blog,
+      });
+      dispatch({
+        type: 'ADD',
+        data: 'Commented blog',
+      });
+    } catch (error) {
+      dispatch({
+        type: 'ADD',
+        data: 'Not authorized',
       });
       console.log(error.response.data.error);
     }
