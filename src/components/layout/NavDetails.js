@@ -5,7 +5,6 @@ import { Button } from '@material-ui/core';
 
 export default function NavDetails() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
 
   const logoutUser = () => {
     dispatch(logout());
@@ -13,10 +12,10 @@ export default function NavDetails() {
 
   return (
     <Fragment>
-      <p>
-        <em>{user.name} logged in</em>
-      </p>
-      <Button onClick={logoutUser}> log out</Button>
+      <a className='' onClick={logoutUser}>
+        {' '}
+        log out
+      </a>
     </Fragment>
   );
 }
