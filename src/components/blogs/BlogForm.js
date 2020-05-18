@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createBlog } from '../../reducers/blogReducer';
+import { setNotification } from '../../reducers/notificationReducer';
 
 const BlogForm = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
   const [formDataBlog, setFormDataBlog] = useState({
     author: '',
     title: '',
@@ -22,12 +24,16 @@ const BlogForm = () => {
     };
     //blogFormRef.current.toggleVisibility();
     dispatch(createBlog(newBlog));
+    const notificationContent = `you have created '${title}'`;
+    dispatch(setNotification(notificationContent, 3));
     setFormDataBlog({ author: '', title: '', url: '' });
   };
 
   const handleBlogChange = (e) => {
     setFormDataBlog({ ...formDataBlog, [e.target.name]: e.target.value });
   };
+
+  if (!user) return null;
 
   return (
     <div>

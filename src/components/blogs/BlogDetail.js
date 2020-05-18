@@ -5,18 +5,28 @@ import {
   likeBlog,
   commentBlog,
 } from '../../reducers/blogReducer';
+import { setNotification } from '../../reducers/notificationReducer';
+import { useHistory } from 'react-router-dom';
 
 const BlogDetail = ({ blog }) => {
   const [comment, setComment] = useState('');
+  const history = useHistory();
   const dispatch = useDispatch();
+
   const handleLike = async (e) => {
     e.preventDefault();
     const id = e.target.value;
     dispatch(likeBlog(id));
+    dispatch(setNotification('Liked blog', 2));
   };
 
   const deleteBlog = async (id) => {
-    dispatch(deleteBlogRedux(id));
+    try {
+      dispatch(deleteBlogRedux(id, blog.title));
+      history.push('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const addComment = (e) => {

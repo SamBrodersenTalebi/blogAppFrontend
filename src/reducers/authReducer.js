@@ -1,5 +1,6 @@
 import loginService from '../services/login';
 import blogService from '../services/blogs';
+import { setNotification } from './notificationReducer';
 
 const initialState = {
   token: '',
@@ -42,18 +43,10 @@ export const login = (credentials) => {
         type: 'LOGIN',
         data: user,
       });
-      dispatch({
-        type: 'ADD',
-        data: 'Successful login',
-      });
+      dispatch(setNotification('successful login', 2));
     } catch (error) {
-      //if it does not login!
-      dispatch({
-        type: 'ADD',
-        data: 'Wrong username or password',
-      });
-      console.log(error.response.data.error);
-      console.log(error.response.data);
+      dispatch(setNotification('wrong username or password', 2));
+      console.log(error);
     }
   };
 };

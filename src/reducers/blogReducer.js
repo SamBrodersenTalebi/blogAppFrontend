@@ -1,4 +1,5 @@
 import blogService from '../services/blogs';
+import { setNotification } from './notificationReducer';
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -50,23 +51,14 @@ export const createBlog = (blog) => {
         type: 'CREATE',
         data: newBlog,
       });
-      const content = 'You have created: ' + blog.title;
-      dispatch({
-        type: 'ADD',
-        data: content,
-      });
     } catch (error) {
-      dispatch({
-        type: 'ADD',
-        data: 'Something went wrong',
-      });
-      console.log(error.response.data.error);
+      console.log(error.response);
     }
   };
 };
 
 //delete blog
-export const deleteBlogRedux = (id) => {
+export const deleteBlogRedux = (id, deletedBlog) => {
   return async (dispatch) => {
     try {
       await blogService.remove(id);
@@ -74,16 +66,10 @@ export const deleteBlogRedux = (id) => {
         type: 'DELETE',
         data: id,
       });
-      dispatch({
-        type: 'ADD',
-        data: 'Deleted blog',
-      });
+      dispatch(setNotification(`You deleted: ${deletedBlog}`, 2));
     } catch (error) {
-      dispatch({
-        type: 'ADD',
-        data: 'Not authorized',
-      });
-      console.log(error.response.data.error);
+      dispatch(setNotification(`Not authorized`, 2));
+      console.log(error.response);
     }
   };
 };
@@ -104,16 +90,8 @@ export const likeBlog = (id) => {
         type: 'LIKE',
         data: updatedBlog,
       });
-      dispatch({
-        type: 'ADD',
-        data: 'You just liked: ' + blog.title,
-      });
     } catch (error) {
-      dispatch({
-        type: 'ADD',
-        data: error.response.data.error,
-      });
-      console.log(error.response.data.error);
+      console.log(error);
     }
   };
 };
@@ -127,16 +105,8 @@ export const commentBlog = (content, id) => {
         type: 'COMMENT',
         data: blog,
       });
-      dispatch({
-        type: 'ADD',
-        data: 'Commented blog',
-      });
     } catch (error) {
-      dispatch({
-        type: 'ADD',
-        data: 'Not authorized',
-      });
-      console.log(error.response.data.error);
+      console.log(error);
     }
   };
 };

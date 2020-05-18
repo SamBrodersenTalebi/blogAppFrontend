@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
+import { setNotification } from '../../reducers/notificationReducer';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginForm = () => {
   const user = useSelector((state) => state.auth.user);
-  const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
   const [formDataLogin, setFormDataLogin] = useState({
@@ -49,7 +49,6 @@ const LoginForm = () => {
     const { username, password } = formDataLogin;
     const credentials = { username, password };
     dispatch(login(credentials));
-    history.push('/');
     setFormDataLogin({
       password: '',
       username: '',

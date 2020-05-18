@@ -1,11 +1,12 @@
-const initialNotication = '';
+const initialNotication = null;
 
 const notificationReducer = (state = initialNotication, action) => {
+  console.log(action.type);
   switch (action.type) {
     case 'ADD':
       return action.data;
-    case 'REMOVE':
-      return '';
+    case 'REMOVE_NOTIFICATION':
+      return null;
     default:
       return state;
   }
@@ -14,7 +15,7 @@ const notificationReducer = (state = initialNotication, action) => {
 //Actions
 const removeNotification = () => {
   return {
-    type: 'REMOVE',
+    type: 'REMOVE_NOTIFICATION',
   };
 };
 
