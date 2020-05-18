@@ -21,13 +21,26 @@ const Landing = () => {
             Welcome <i id='name-ani'>{user.name}</i>
           </p>
         ) : (
-          <div>
-            <p>Create your own user or login if you already have one</p>
-            <Button variant='contained' color='primary'>
-              <Link to='register'>Sign Up</Link>
+          <div className='center'>
+            <p style={{ fontSize: 22 }}>
+              Create your own user or login if you already have one
+            </p>
+            <Button
+              variant='contained'
+              color='primary'
+              className='landing-button'
+            >
+              <Link to='register' className='link'>
+                Sign Up
+              </Link>
             </Button>
             <Button variant='contained'>
-              <Link to='login'>Log in</Link>
+              <Link
+                to='login'
+                style={{ color: 'black', textDecoration: 'none' }}
+              >
+                Log in
+              </Link>
             </Button>
           </div>
         )}

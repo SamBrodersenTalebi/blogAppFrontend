@@ -39,3 +39,7 @@ button {
   animation-name: name;
   animation-duration: 4s;
 }
+
+#login {
+  color: black;
+}
