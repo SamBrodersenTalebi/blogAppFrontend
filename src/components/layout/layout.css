@@ -1,3 +1,11 @@
+p,
+li,
+div,
+input,
+button {
+  font-family: 'Roboto', cursive;
+}
+
 .link {
   text-decoration: none !important;
   color: #e6e6e6 !important;
@@ -7,4 +15,27 @@
   color: white;
   text-decoration: none;
   cursor: pointer;
+}
+
+.center {
+  text-align: center;
+}
+
+.roboto {
+  font-family: 'Roboto', cursive;
+}
+
+@keyframes name {
+  from {
+    background-color: #72aece;
+  }
+  to {
+    background-color: #72cec0;
+  }
+}
+
+#name-ani {
+  background-color: #72aece;
+  animation-name: name;
+  animation-duration: 4s;
 }
