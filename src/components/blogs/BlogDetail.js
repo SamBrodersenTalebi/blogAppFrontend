@@ -7,11 +7,13 @@ import {
 } from '../../reducers/blogReducer';
 import { setNotification } from '../../reducers/notificationReducer';
 import { useHistory } from 'react-router-dom';
+import { TextField, Button } from '@material-ui/core';
 
 const BlogDetail = ({ blog }) => {
   const [comment, setComment] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
+  const center = { textAlign: 'center' };
 
   const handleLike = async (e) => {
     e.preventDefault();
@@ -45,15 +47,26 @@ const BlogDetail = ({ blog }) => {
   }
   return (
     <div>
-      <p>{blog.title}</p>
-      <p>{blog.url}</p>
-      <p>
-        likes: {blog.likes}
-        <button className='like' value={blog.id} onClick={handleLike}>
-          like
-        </button>
-      </p>
-      <p>{blog.author}</p>
+      <h1 style={center}>{blog.title}</h1>
+      <div style={center}>
+        <p>
+          Url:<i>{blog.url}</i>
+        </p>
+        <p>
+          Blog likes: {blog.likes}
+          <Button
+            variant='contained'
+            color='secondary'
+            className='like'
+            value={blog.id}
+            onClick={handleLike}
+          >
+            LIKE
+          </Button>
+        </p>
+        <p>{blog.author}</p>
+      </div>
+
       <h3>Comments</h3>
       <ul>
         {blog.comments.map((comment) => (
@@ -61,14 +74,20 @@ const BlogDetail = ({ blog }) => {
         ))}
       </ul>
       <form onSubmit={addComment}>
-        <input
-          onChange={onChange}
-          type='text'
-          id='comment'
-          name='comment'
-          value={comment}
-        />
-        <button type='submit'>Submit</button>
+        <div>
+          <TextField
+            label='comment'
+            value={comment}
+            id='comment'
+            name='comment'
+            onChange={onChange}
+          />
+        </div>
+        <div style={{ marginTop: 10 }}>
+          <Button variant='contained' color='primary' type='submit'>
+            Add comment
+          </Button>
+        </div>
       </form>
       <button onClick={() => deleteBlog(blog.id)}>remove</button>
     </div>

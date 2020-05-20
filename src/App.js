@@ -38,7 +38,7 @@ const App = () => {
     <Container>
       {loading ? (
         <>
-          <Container>
+          <Container style={{ marginBottom: 90 }}>
             <Navbar />
             <Notification />
             <Switch>
@@ -53,8 +53,8 @@ const App = () => {
                 <BlogDetail blog={blog} />
               </Route>
             </Switch>
-            <Footer />
           </Container>
+          <Footer />
         </>
       ) : (
         <div>

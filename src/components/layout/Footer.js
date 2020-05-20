@@ -2,7 +2,13 @@ import React from 'react';
 
 export default function Footer() {
   const style = {
-    padding: 10,
+    padding: 30,
+    margin: 0,
+    backgroundColor: '#3F51B5',
+    position: 'fixed',
+    left: 0,
+    bottom: 0,
+    width: '100%',
   };
   return (
     <footer>

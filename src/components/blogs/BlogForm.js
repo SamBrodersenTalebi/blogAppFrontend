@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBlog } from '../../reducers/blogReducer';
 import { setNotification } from '../../reducers/notificationReducer';
+import { TextField, Button } from '@material-ui/core';
 
 const BlogForm = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,6 @@ const BlogForm = () => {
     title: '',
     url: '',
   });
-  const { title, author, url } = formDataBlog;
 
   const handleBlogSubmit = async (e) => {
     e.preventDefault();
@@ -36,42 +36,38 @@ const BlogForm = () => {
   if (!user) return null;
 
   return (
-    <div>
-      <h2>Create new</h2>
+    <div style={{ textAlign: 'center' }}>
+      <h2 style={{ marginBottom: 5 }}>Create new post</h2>
       <form onSubmit={handleBlogSubmit}>
         <div>
-          title:
-          <input
+          <TextField
+            label='title'
             id='title'
-            type='text'
-            value={title}
             name='title'
             onChange={(e) => handleBlogChange(e)}
           />
         </div>
         <div>
-          author:
-          <input
+          <TextField
+            label='author'
             id='author'
-            type='text'
-            value={author}
             name='author'
             onChange={(e) => handleBlogChange(e)}
           />
         </div>
         <div>
-          url:
-          <input
+          <TextField
+            label='url'
             id='url'
-            type='text'
-            value={url}
             name='url'
             onChange={(e) => handleBlogChange(e)}
           />
         </div>
-        <button id='create-blog' type='submit'>
-          create
-        </button>
+        <div style={{ marginTop: 20 }}>
+          <Button variant='contained' color='primary' type='submit'>
+            Create
+          </Button>
+        </div>
       </form>
     </div>
   );
