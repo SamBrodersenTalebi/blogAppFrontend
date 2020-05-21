@@ -1,4 +1,7 @@
-const initialNotication = null;
+const initialNotication = {
+  content: null,
+  status: null,
+};
 
 const notificationReducer = (state = initialNotication, action) => {
   console.log(action.type);
@@ -6,7 +9,7 @@ const notificationReducer = (state = initialNotication, action) => {
     case 'ADD':
       return action.data;
     case 'REMOVE_NOTIFICATION':
-      return null;
+      return { ...initialNotication };
     default:
       return state;
   }
@@ -19,11 +22,11 @@ const removeNotification = () => {
   };
 };
 
-export const setNotification = (content, time) => {
+export const setNotification = (data, time) => {
   return (dispatch) => {
     dispatch({
       type: 'ADD',
-      data: content,
+      data: data,
     });
     setTimeout(() => {
       dispatch(removeNotification());

@@ -5,7 +5,7 @@ import { setNotification } from './notificationReducer';
 const initialState = {
   token: '',
   user: null,
-  loading: false,
+  loading: true,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -22,6 +22,7 @@ const authReducer = (state = initialState, action) => {
         loading: true,
       };
     case 'INIT_AUTH':
+      console.log(state);
       return {
         ...state,
         token: action.data.token,
@@ -43,9 +44,16 @@ export const login = (credentials) => {
         type: 'LOGIN',
         data: user,
       });
-      dispatch(setNotification('successful login', 2));
+      dispatch(
+        setNotification({ content: 'successful login', status: 'success' }, 2)
+      );
     } catch (error) {
-      dispatch(setNotification('wrong username or password', 2));
+      dispatch(
+        setNotification(
+          { content: 'wrong username or password', status: 'error' },
+          2
+        )
+      );
       console.log(error);
     }
   };

@@ -25,7 +25,9 @@ const BlogForm = () => {
     //blogFormRef.current.toggleVisibility();
     dispatch(createBlog(newBlog));
     const notificationContent = `you have created '${title}'`;
-    dispatch(setNotification(notificationContent, 3));
+    dispatch(
+      setNotification({ content: notificationContent, status: 'success' }, 3)
+    );
     setFormDataBlog({ author: '', title: '', url: '' });
   };
 

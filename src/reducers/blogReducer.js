@@ -66,9 +66,16 @@ export const deleteBlogRedux = (id, deletedBlog) => {
         type: 'DELETE',
         data: id,
       });
-      dispatch(setNotification(`You deleted: ${deletedBlog}`, 2));
+      dispatch(
+        setNotification(
+          { content: `You deleted: ${deletedBlog}`, status: 'success' },
+          2
+        )
+      );
     } catch (error) {
-      dispatch(setNotification(`Not authorized`, 2));
+      dispatch(
+        setNotification({ content: `Not authorized`, status: 'error' }, 2)
+      );
       console.log(error.response);
     }
   };
