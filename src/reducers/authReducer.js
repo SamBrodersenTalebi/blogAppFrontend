@@ -53,7 +53,7 @@ export const login = (credentials) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    window.localStorage.removeItem('loggedNoteappUser');
+    window.localStorage.removeItem('loggedBlogappUser');
     dispatch({
       type: 'LOGOUT',
     });

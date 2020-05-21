@@ -17,7 +17,7 @@ const BlogDetail = ({ blog }) => {
 
   const handleLike = async (e) => {
     e.preventDefault();
-    const id = e.target.value;
+    const id = blog.id;
     dispatch(likeBlog(id));
     dispatch(setNotification('Liked blog', 2));
   };
@@ -60,11 +60,14 @@ const BlogDetail = ({ blog }) => {
             className='like'
             value={blog.id}
             onClick={handleLike}
+            style={{ marginLeft: 10 }}
           >
             LIKE
           </Button>
         </p>
-        <p>{blog.author}</p>
+        <p>
+          Author: <i>{blog.author}</i>
+        </p>
       </div>
 
       <h3>Comments</h3>
@@ -89,7 +92,13 @@ const BlogDetail = ({ blog }) => {
           </Button>
         </div>
       </form>
-      <button onClick={() => deleteBlog(blog.id)}>remove</button>
+      <Button
+        variant='contained'
+        color='secondary'
+        onClick={() => deleteBlog(blog.id)}
+      >
+        Remove post
+      </Button>
     </div>
   );
 };

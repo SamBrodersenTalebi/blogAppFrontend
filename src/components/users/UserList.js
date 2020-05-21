@@ -36,6 +36,11 @@ export default function UserList() {
 
   console.log(rows);
 
+  const style = {
+    textDecoration: 'none',
+    color: 'black',
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label='simple table'>
@@ -49,7 +54,9 @@ export default function UserList() {
           {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component='th' scope='row'>
-                <Link to={`/users/${row.id}`}>{row.name}</Link>
+                <Link to={`/users/${row.id}`} style={style}>
+                  {row.name}
+                </Link>
               </TableCell>
               <TableCell align='right'>{row.blogCreated}</TableCell>
             </TableRow>
