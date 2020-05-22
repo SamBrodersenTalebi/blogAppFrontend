@@ -12,6 +12,7 @@ const BlogForm = () => {
     title: '',
     url: '',
   });
+  const { title, author, url } = formDataBlog;
 
   const handleBlogSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const BlogForm = () => {
       author,
       url,
     };
+    console.log(newBlog);
     //blogFormRef.current.toggleVisibility();
     dispatch(createBlog(newBlog));
     const notificationContent = `you have created '${title}'`;
@@ -46,6 +48,7 @@ const BlogForm = () => {
             label='title'
             id='title'
             name='title'
+            value={title}
             onChange={(e) => handleBlogChange(e)}
           />
         </div>
@@ -54,6 +57,7 @@ const BlogForm = () => {
             label='author'
             id='author'
             name='author'
+            value={author}
             onChange={(e) => handleBlogChange(e)}
           />
         </div>
@@ -62,6 +66,7 @@ const BlogForm = () => {
             label='url'
             id='url'
             name='url'
+            value={url}
             onChange={(e) => handleBlogChange(e)}
           />
         </div>

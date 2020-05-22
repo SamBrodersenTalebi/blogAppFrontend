@@ -47,6 +47,8 @@ export const login = (credentials) => {
       const user = await loginService.login(credentials);
       //save user to local storage:
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
+      console.log(user.token);
+      blogService.setToken(user.token);
       dispatch({
         type: 'LOGIN',
         data: user,

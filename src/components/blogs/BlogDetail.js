@@ -36,6 +36,7 @@ const BlogDetail = ({ blog }) => {
     const id = blog.id;
     let content = { comment };
     dispatch(commentBlog(content, id));
+    setComment('');
   };
 
   const onChange = (e) => {
