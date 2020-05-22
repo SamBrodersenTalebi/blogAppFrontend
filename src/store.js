@@ -5,6 +5,7 @@ import blogReducer from './reducers/blogReducer';
 import userReducer from './reducers/userReducer';
 import authReducer from './reducers/authReducer';
 import thunk from 'redux-thunk';
+import { initAuth } from './reducers/authReducer';
 
 const reducer = combineReducers({
   notification: notificationReducer,
@@ -14,8 +15,10 @@ const reducer = combineReducers({
 });
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
+
 console.log(store.getState());
 store.subscribe(() => {
+  //store.dispatch(initAuth());
   console.log(store.getState());
 });
 

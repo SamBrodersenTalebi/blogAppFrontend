@@ -5,7 +5,7 @@ import { setNotification } from './notificationReducer';
 const initialState = {
   token: '',
   user: null,
-  loading: true,
+  loading: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -22,13 +22,20 @@ const authReducer = (state = initialState, action) => {
         loading: true,
       };
     case 'INIT_AUTH':
-      console.log(state);
-      return {
-        ...state,
-        token: action.data.token,
-        loading: true,
-        user: { name: action.data.name, username: action.data.username },
-      };
+      if (action.data) {
+        return {
+          ...state,
+          token: action.data.token,
+          loading: true,
+          user: { name: action.data.name, username: action.data.username },
+        };
+      } else {
+        return {
+          ...state,
+          loading: true,
+        };
+      }
+
     default:
       return state;
   }
@@ -81,6 +88,10 @@ export const initAuth = () => {
       });
     } else {
       blogService.setToken('');
+      dispatch({
+        type: 'INIT_AUTH',
+        data: null,
+      });
     }
   };
 };

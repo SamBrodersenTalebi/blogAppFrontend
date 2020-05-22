@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initAuth } from './reducers/authReducer';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Footer from './components/layout/Footer';
 
 const App = () => {
@@ -57,8 +58,16 @@ const App = () => {
           <Footer />
         </>
       ) : (
-        <div>
-          <p>Loading...</p>
+        <div
+          style={{
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          Loading please wait
+          <CircularProgress color='secondary' />
         </div>
       )}
     </Container>
